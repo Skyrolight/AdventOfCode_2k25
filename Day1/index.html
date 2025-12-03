@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<body>
+    <script>
+        var dial = 50;
+        var count = 0;
+
+        fetch("input.txt")
+            .then((res) => res.text())
+            .then((text) => {
+                const lines = text.split('\n');
+                lines.forEach(line => {              
+                    if (line.includes("R")) {
+                        calculate("R", line.replace("R", ""))
+                    } else {
+                        calculate("L", line.replace("L", ""))                        
+                    }
+
+                    if (dial == 0) {
+                        count++;
+                    }
+                console.log("Mon mot de passe est : " + count);
+                }); 
+
+            })
+
+        
+        const calculate = (direction, number) => {
+            number = parseInt(number);
+            if (direction === "R") {
+                if (number + dial > 99) {
+                    dial = (number + dial - 100)
+                } else {
+                    dial += number
+                }
+            } else if (direction === "L") {
+                if (dial - number < 0) {
+                    dial = (dial - number + 100)
+                } else {
+                    dial -= number
+                }
+            }
+        }
+    </script>
+</body>
+</html>
